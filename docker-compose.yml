@@ -1,0 +1,22 @@
+version: '3'
+services:
+  dashd:
+    build: docker-dashd/.
+    ports:
+     - "9998:9999"
+    volumes:
+     - ./dash:/dash
+  pool:
+    image: "p2pool:latest"
+    environment:
+        - P2POOL_DASH_HOME=/p2pool/p2pool-dash
+        - P2POOL_DASH_REPO=https://github.com/thelazier/p2pool-dash
+        - DASH_RPCUSER=dashrpc
+        - DASH_RPCPASSWORD=<PASS_FROM_DASH_CONF>
+        - DASH_RPCHOST=<DASHD_DOCKER_NAME>
+        - DASH_RPCPORT=9998
+        - DASH_P2PPORT=9999
+        - DASH_FEE=0
+        - DASH_DONATION=0
+        - DASH_ADDRESS=<DASH_ADDRESS>
+        - DASH_OTHER_PARAM=--disable-advertise
